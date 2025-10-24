@@ -7,10 +7,12 @@ import io.smallrye.reactive.messaging.kafka.Record;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+import lombok.SneakyThrows;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @ApplicationScoped
 public class CustomerEventsProducer {
@@ -22,13 +24,18 @@ public class CustomerEventsProducer {
   @Inject
   CustomerEventRecordMapper mapper;
 
+  @SneakyThrows
   private void send(CustomerEventRecord eventRecord) {
-    emitter.send(
-      Record.of(
-        eventRecord.customerUuid(), // partition = message order
-        eventRecord
+    emitter
+      .send(
+        Record.of(
+          eventRecord.customerUuid(), // partition = message order
+          eventRecord
+        )
       )
-    );
+      // synchronous - wait for ack/failure
+      .toCompletableFuture()
+      .get(2, TimeUnit.SECONDS);
   }
 
   public void onCustomerCreated(@Observes CustomerCreatedEvent event) {
