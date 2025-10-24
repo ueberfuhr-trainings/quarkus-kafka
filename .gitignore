@@ -5,3 +5,8 @@
 !.editorconfig
 **/*.iml
 **/*.private.*
+
+# Maven Wrapper
+!.mvn/wrapper/*
+!mvnw
+!mvnw.cmd
