@@ -15,9 +15,7 @@ We use Maven Wrapper to build the project.
 # Build all
 ./mvnw clean package -Dquarkus.package.jar.type=uber-jar
 # Run Account Service Provider
-cd account-service-provider && \
-  ../mvnw -pl account-service-provider -am quarkus:dev
+./mvnw -pl account-service-provider -am quarkus:dev
 # Run Statistics Service Provider
-cd statistics-service-provider && \
-  ../mvnw -pl statistics-service-provider -am quarkus:dev
+./mvnw -pl statistics-service-provider -am quarkus:dev
 ```
