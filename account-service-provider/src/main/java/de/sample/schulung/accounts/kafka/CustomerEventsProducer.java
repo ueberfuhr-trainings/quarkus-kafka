@@ -1,0 +1,49 @@
+package de.sample.schulung.accounts.kafka;
+
+import de.sample.schulung.accounts.domain.events.CustomerCreatedEvent;
+import de.sample.schulung.accounts.domain.events.CustomerDeletedEvent;
+import de.sample.schulung.accounts.domain.events.CustomerReplacedEvent;
+import io.smallrye.reactive.messaging.kafka.Record;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+
+import java.util.UUID;
+
+@ApplicationScoped
+public class CustomerEventsProducer {
+
+  @Inject
+  @Channel("customers")
+  Emitter<Record<UUID, CustomerEventRecord>> emitter;
+
+  @Inject
+  CustomerEventRecordMapper mapper;
+
+  private void send(CustomerEventRecord eventRecord) {
+    emitter.send(
+      Record.of(
+        eventRecord.customerUuid(), // partition = message order
+        eventRecord
+      )
+    );
+  }
+
+  public void onCustomerCreated(@Observes CustomerCreatedEvent event) {
+    final var eventRecord = mapper.map(event);
+    send(eventRecord);
+  }
+
+  public void onCustomerReplaced(@Observes CustomerReplacedEvent event) {
+    final var eventRecord = mapper.map(event);
+    send(eventRecord);
+  }
+
+  public void onCustomerDeleted(@Observes CustomerDeletedEvent event) {
+    final var eventRecord = mapper.map(event);
+    send(eventRecord);
+  }
+
+}
