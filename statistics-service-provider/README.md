@@ -8,6 +8,7 @@ To run and use the app, we can use these commands:
 # run the Main class in your IDE or use Maven
 cd .. && ./mvnw -pl statistics-service-provider -am quarkus:dev
 # Open http://localhost:8082 in the browser
+# see Kafka contents: http://localhost:8082/q/dev-ui/quarkus-kafka-client/topics
 # Invoke the API to read the statistics
 curl \
   -X 'GET' \
