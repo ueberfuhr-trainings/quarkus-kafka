@@ -9,14 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Getter
-@Setter
 @Entity(name = "Customer")
 @Table(name = "CUSTOMERS")
 public class CustomerEntity {
@@ -31,5 +27,41 @@ public class CustomerEntity {
   @Column(name = "BIRTH_DATE")
   private LocalDate birthdate;
   private CustomerState state = CustomerState.ACTIVE;
+
+  public UUID getUuid() {
+    return uuid;
+  }
+
+  public CustomerEntity setUuid(UUID uuid) {
+    this.uuid = uuid;
+    return this;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public CustomerEntity setName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public LocalDate getBirthdate() {
+    return birthdate;
+  }
+
+  public CustomerEntity setBirthdate(LocalDate birthdate) {
+    this.birthdate = birthdate;
+    return this;
+  }
+
+  public CustomerState getState() {
+    return state;
+  }
+
+  public CustomerEntity setState(CustomerState state) {
+    this.state = state;
+    return this;
+  }
 
 }

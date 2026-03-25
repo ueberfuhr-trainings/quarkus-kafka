@@ -8,17 +8,21 @@ import de.sample.schulung.accounts.shared.interceptors.FireEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
 @ApplicationScoped
-@RequiredArgsConstructor
 public class CustomersService {
 
   private final CustomersSinkPort sink;
+
+  public CustomersService(
+    CustomersSinkPort sink
+  ) {
+    this.sink = sink;
+  }
 
   public Stream<Customer> getCustomers() {
     return sink.getCustomers();

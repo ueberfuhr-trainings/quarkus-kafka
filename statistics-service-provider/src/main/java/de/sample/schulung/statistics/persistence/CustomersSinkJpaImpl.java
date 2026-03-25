@@ -5,17 +5,23 @@ import de.sample.schulung.statistics.domain.CustomersSinkPort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Typed;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
 @ApplicationScoped
 @Typed(CustomersSinkPort.class)
-@RequiredArgsConstructor
 public class CustomersSinkJpaImpl implements CustomersSinkPort {
 
   private final CustomerEntityRepository repo;
   private final CustomerEntityMapper mapper;
+
+  public CustomersSinkJpaImpl(
+    CustomerEntityRepository repo,
+    CustomerEntityMapper mapper
+  ) {
+    this.repo = repo;
+    this.mapper = mapper;
+  }
 
   @Transactional
   @Override
