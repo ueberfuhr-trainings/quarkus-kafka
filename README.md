@@ -9,15 +9,15 @@ In this repository, we can find the following projects:
 
 ## Build and run the project
 
-We use Maven Wrapper to build the project.
+We use Maven to build the project.
 
 ```bash
 # Build all
-./mvnw clean package -Dquarkus.package.jar.type=uber-jar
+mvn clean package -Dquarkus.package.jar.type=uber-jar
 # Run Account Service Provider
-./mvnw -pl account-service-provider -am quarkus:dev
+mvn -pl account-service-provider -am quarkus:dev
 # Run Statistics Service Provider
-./mvnw -pl statistics-service-provider -am quarkus:dev
+mvn -pl statistics-service-provider -am quarkus:dev
 ```
 
 # Documentation
